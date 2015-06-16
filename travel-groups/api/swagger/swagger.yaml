@@ -85,15 +85,15 @@ definitions:
       id: 
         type: number 
       creater:
-        $ref: "#/definition/User"
+        $ref: "#/definitions/User"
       group_member:
         type: array
         items: 
-          $ref: "#/definition/User"
+          $ref: "#/definitions/User"
       transportations: 
         type: array
         items: 
-          $ref: "#/definition/Transportation"
+          $ref: "#/definitions/Transportation"
       origin: 
         type: string
       destination:
