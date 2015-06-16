@@ -18,7 +18,7 @@ consumes:
 produces:
   - application/json
 paths:
-    /plan:
+   /plan:
      post: 
         summary: Create a plan
         description: Create a new plan of a user
@@ -34,9 +34,26 @@ paths:
          200: 
           description: plan ok response
          default: 
+  /user:
+    # binds a127 app logic to a route
+    post:
+      summary: creates User
+      description: Creates a new user of Travel Groups
+      parameters:
+        - name: User
+          in: body
+          description: The user information
+          required: true
+          schema:
+            $ref: "#/definitions/NewUser"
+      responses:
+        200:
+          description: OK
+        default:
           description: Error
           schema: 
             $ref: "#/definitions/ErrorResponse"
+      
 # complex objects have schema definitions
 definitions:
   Transportation:
@@ -54,22 +71,28 @@ definitions:
       message:
         type: string
   User:
+    allOf:
+      - $ref: '#/definitions/NewUser'
     required:
-      - name
       - id
     properties:
-      name:
-        type: string
       id:
         type: number
-      password:
-        type: string
       plan_id:
         type: number
       friends:
         type: array
         items:
             $ref: "#/definitions/User"
+  NewUser:
+    required:
+      - name
+      - password
+    properties:
+      name:
+        type: string
+      password: 
+        type: string
   Plan: 
     allOf:
       - $ref: "#/definitions/NewPlan"
@@ -92,9 +115,11 @@ definitions:
     properties:
       creater:
         $ref: "#/definitions/User"
-      origin: 
-        type: string
-      destination:
-        type: string
-      departure: 
-        type: string
+      group_member:
+        type: array
+        items: 
+          $ref: "#/definitions/User"
+      transportations: 
+        type: array
+        items: 
+          $ref: "#/definitions/Transportation"
