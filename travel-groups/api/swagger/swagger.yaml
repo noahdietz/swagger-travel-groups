@@ -18,22 +18,25 @@ consumes:
 produces:
   - application/json
 paths:
-   /plan:
-     post: 
-        summary: Create a plan
-        description: Create a new plan of a user
-        operationId: addPlan
-        parameters:
-          - name: Plan
-            in: body
-            description: Plan to add 
-            required: true
-            schema: 
-              $ref: "#/definitions/NewPlan"
-        responses: 
-         200: 
+  /plan:
+    post: 
+      summary: Create a plan
+      description: Create a new plan of a user
+      operationId: addPlan
+      parameters:
+        - name: Plan
+          in: body
+          description: Plan to add 
+          required: true
+          schema: 
+            $ref: "#/definitions/NewPlan"
+      responses: 
+        200: 
           description: plan ok response
-         default: 
+        default:
+          description: Error
+          schema: 
+            $ref: "#/definitions/ErrorResponse"
   /user:
     # binds a127 app logic to a route
     post:
