@@ -44,12 +44,14 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 # complex objects have schema definitions
 definitions:
-  HelloWorldResponse:
-    required:
-      - message
+  TransportationResponse:
     properties:
-      message:
-        type: string
+      which_method:
+        type: "string"
+      arrival:
+        type: "string"
+      intr_places:
+        type: "string"
   ErrorResponse:
     required:
       - message
