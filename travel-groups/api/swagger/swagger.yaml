@@ -44,16 +44,14 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 # complex objects have schema definitions
 definitions:
-  TransportationResponse:
+  Transportation:
     properties:
-      message:
-        type: string
       which_method:
-        type: "string"
+        type: string
       arrival:
-        type: "string"
+        type: string
       intr_places:
-        type: "string"
+        type: string
   ErrorResponse:
     required:
       - message
@@ -77,3 +75,26 @@ definitions:
         type: array
         items:
             $ref: "#/definitions/User"
+  Plan: 
+    required:
+      - id
+      - creater
+    properties:
+      id: 
+        type: number 
+      creater:
+        $ref: "#/definition/User"
+      group_member:
+        type: array
+        items: 
+          $ref: "#/definition/User"
+      transportations: 
+        type: array
+        items: 
+          $ref: "#/definition/Transportation"
+      origin: 
+        type: string
+      destination:
+        type: string
+      departure: 
+        type: string
