@@ -59,7 +59,9 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /user/{id}/plan:
     get: 
+      summary: get plan by the user ID
       description: return the plan information of the user
+      operationId: getPlanByID
       parameters: 
         - name: id 
           in: path

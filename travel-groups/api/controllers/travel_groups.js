@@ -1,3 +1,23 @@
 'use strict';
 
 var util = require('util');
+var request = require('request')
+
+module.exports = {
+	getUserByID: getUserByID,
+	getPlanByID: getPlanByID
+}
+
+function getPlanByID(req, res) {
+	var id = req.swagger.params.id.value;
+	var plan = {
+		"id": "1",
+		"creater": id,
+		group_member: [],
+		transportations: [],
+		"depature": "3:00 pm"
+		"destination": "San Francisco"
+		"origin": "San Jose"
+	};
+	res.json(plan);
+}
