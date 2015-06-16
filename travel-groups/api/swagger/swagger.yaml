@@ -18,30 +18,26 @@ consumes:
 produces:
   - application/json
 paths:
-  /hello:
+  /user:
     # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
-    get:
-      description: Returns 'Hello' to the caller
-      # used as the method name of the controller
-      operationId: hello
+    post:
+      summary: creates User
+      description: Creates a new user of Travel Groups
       parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
-      responses:
-        "200":
-          description: Success
+        - name: User
+          in: body
+          description: The user information
+          required: true
           schema:
-            # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
-        # responses may fall through to errors
+            $ref: "#/definitions/NewUser"
+      responses:
+        200:
+          description: OK
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+      
 # complex objects have schema definitions
 definitions:
   TransportationResponse:
@@ -61,19 +57,26 @@ definitions:
       message:
         type: string
   User:
+    allOf:
+      - $ref: '#/definitions/NewUser'
     required:
-      - name
       - id
     properties:
-      name:
-        type: string
       id:
         type: number
-      password:
-        type: string
       plan_id:
         type: number
       friends:
         type: array
         items:
             $ref: "#/definitions/User"
+  NewUser:
+    required:
+      - name
+      - password
+    properties:
+      name:
+        type: string
+      password: 
+        type: string
+        
