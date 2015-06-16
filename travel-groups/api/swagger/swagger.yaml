@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
+  title: Travel Groups App
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths 
@@ -50,6 +50,23 @@ definitions:
     properties:
       message:
         type: string
+  User:
+    required:
+      - name
+      - id
+    properties:
+      name:
+        type: string
+      id:
+        type: number
+      password:
+        type: string
+      plan_id:
+        type: number
+      friends:
+        type: array
+        items:
+            $ref: "#/definitions/User"
   ErrorResponse:
     required:
       - message
