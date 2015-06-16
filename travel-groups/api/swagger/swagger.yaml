@@ -56,6 +56,24 @@ paths:
           description: Error
           schema: 
             $ref: "#/definitions/ErrorResponse"
+  /user/{id}/plan:
+    get: 
+      description: return the plan information of the user
+      parameters: 
+        - name: id 
+          in: path
+          description: ID of the user
+          required: true
+          type: number
+      responses: 
+        200: 
+          description: ok
+          schema: 
+            $ref: "#/definitions/Plan"
+        default:
+          description: Error
+          schema: 
+            $ref: "#/definitions/ErrorResponse"
       
 # complex objects have schema definitions
 definitions:
@@ -128,4 +146,3 @@ definitions:
         type: string
       depature: 
         type: string
-      
