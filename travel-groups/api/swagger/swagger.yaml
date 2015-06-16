@@ -19,6 +19,7 @@ produces:
   - application/json
 paths:
   /plan:
+    x-swagger-router-controller: travel_groups
     post: 
       summary: Create a plan
       description: Create a new plan of a user
@@ -39,6 +40,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /user:
     # binds a127 app logic to a route
+    x-swagger-router-controller: travel_groups
     post:
       summary: creates User
       description: Creates a new user of Travel Groups
@@ -58,6 +60,7 @@ paths:
           schema: 
             $ref: "#/definitions/ErrorResponse"
   /user/{id}/plan:
+    x-swagger-router-controller: travel_groups
     get: 
       description: return the plan information of the user
       parameters: 
@@ -76,6 +79,7 @@ paths:
           schema: 
             $ref: "#/definitions/ErrorResponse"
   /user/{id}:
+    x-swagger-router-controller: travel_groups
     get:
       summary: gets user by ID
       description: retrieves the user specified by the ID parameter
