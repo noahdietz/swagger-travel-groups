@@ -11,7 +11,7 @@ module.exports = {
 function getPlanByID(req, res) {
 	var id = req.swagger.params.id.value;
 	var plan = {
-		"id": "1",
+		"id": 11111,
 		"creater": id,
 		"group_member": [],
 		"transportations": [],
