@@ -84,12 +84,15 @@ paths:
 definitions:
   Transportation:
     properties:
+      id: 
+        type: number
       which_method:
         type: string
       arrival:
         type: string
       intr_places:
         type: string
+        
   ErrorResponse:
     required:
       - message
@@ -109,7 +112,7 @@ definitions:
       friends:
         type: array
         items:
-            $ref: "#/definitions/User"
+            type: number
   NewUser:
     required:
       - name
@@ -119,33 +122,33 @@ definitions:
         type: string
       password: 
         type: string
+        
   Plan: 
     allOf:
       - $ref: "#/definitions/NewPlan"
-      - required:
+    required:
         - id
-        properties:
-          id: 
+    properties:
+        id: 
+          type: number
+        group_member:
+          type: array
+          items: 
             type: number
-          group_member:
-            type: array
-            items: 
-              $ref: "#/definitions/User"
-          transportations: 
-            type: array
-            items: 
-              $ref: "#/definitions/Transportation"
+        transportations: 
+          type: array
+          items: 
+            type: number
   NewPlan: 
     required:
       - creater
     properties:
       creater:
-        $ref: "#/definitions/User"
-      group_member:
-        type: array
-        items: 
-          $ref: "#/definitions/User"
-      transportations: 
-        type: array
-        items: 
-          $ref: "#/definitions/Transportation"
+        type: number
+      origin:
+        type: string
+      destination:
+        type: string
+      depature: 
+        type: string
+      
