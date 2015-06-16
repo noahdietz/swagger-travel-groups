@@ -42,6 +42,26 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    /plan:
+    post: 
+      description: Create a new plan
+      operationId: addPlan
+      parameters:
+        - name: Plan
+          in: body
+          description: Plan to add 
+          required: true
+          schema: 
+            $ref: "#/definitions/NewPlan"
+      responses: 
+        200: 
+          description: plan response
+          schema: 
+            $ref: "#/definitions/Plan"
+        default: 
+          description: unexpected error
+          schema: 
+            $ref: "#/definitions/ErrorResponse"
 # complex objects have schema definitions
 definitions:
   Transportation:
@@ -76,22 +96,27 @@ definitions:
         items:
             $ref: "#/definitions/User"
   Plan: 
+    allOf:
+      - $ref: "#/definitions/NewPlan"
+      - required:
+        - id
+        properties:
+          id: 
+            type: number
+          group_member:
+            type: array
+            items: 
+              $ref: "#/definition/User"
+          transportations: 
+            type: array
+            items: 
+              $ref: "#/definition/Transportation"
+  NewPlan: 
     required:
-      - id
       - creater
     properties:
-      id: 
-        type: number 
       creater:
         $ref: "#/definition/User"
-      group_member:
-        type: array
-        items: 
-          $ref: "#/definition/User"
-      transportations: 
-        type: array
-        items: 
-          $ref: "#/definition/Transportation"
       origin: 
         type: string
       destination:
