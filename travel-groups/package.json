@@ -9,6 +9,7 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.12.3",
+    "js-yaml": "^3.3.1",
     "serve-static": "^1.9.3",
     "swagger-docs": "^1.0.0",
     "swagger-express-mw": "0.0.x",
