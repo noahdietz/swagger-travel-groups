@@ -7,7 +7,28 @@ module.exports = {
 	getUserByID: getUserByID,
 	getPlanByID: getPlanByID,
 	addPlan: addPlan,
-	createUser: createUser
+	createUser: createUser,
+	updatePlanByID: updatePlanByID
+}
+
+function updatePlanByID(req, res) {
+	var id = req.swagger.params.id.value;
+	var creater = req.body.creater;
+	var depature = req.body.depature;
+	var destination = req.body.destination;
+	var origin = req.body.origin;
+	var group_member = req.body.group_member;
+	var transportations = req.body.transportations
+	var plan = {
+		"id": 12345,
+		"creater": creater,
+		"group_member": [11,22],
+		"transportations": [22,1223],
+		"depature": depature,
+		"destination": destination,
+		"origin": origin,
+	};
+	res.json(plan);
 }
 
 function getPlanByID(req, res) {
