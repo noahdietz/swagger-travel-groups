@@ -68,3 +68,10 @@ function createUser(req, res) {
 
 	res.json(user);
 }
+
+function updateUser(req, res) {
+	var id = req.swagger.params.id.value;
+	var update = req.body.new_info;
+
+	
+}
