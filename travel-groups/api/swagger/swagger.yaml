@@ -51,7 +51,6 @@ paths:
         - name: User
           in: body
           description: The user information
-          required: true
           schema:
             $ref: "#/definitions/NewUser"
       responses:
@@ -106,6 +105,32 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+    post:
+      summary: for updating user information
+      description: used for updating an existing user's information
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          description: id of user to be updated
+          required: true
+          type: integer
+          format: int64
+        - name: new_info
+          in: body
+          description: new user information
+          schema:
+            $ref: '#/definitions/UpdateUser'
+      responses:
+        200:
+          description: update successful
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    
       
 # complex objects have schema definitions
 definitions:
@@ -148,6 +173,15 @@ definitions:
       name:
         type: string
       password: 
+        type: string
+        
+  UpdateUser:
+    properties:
+      name:
+        type: string
+      plan_id:
+        type: number
+      password:
         type: string
         
   Plan: 
