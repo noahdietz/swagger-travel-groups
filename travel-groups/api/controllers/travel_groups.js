@@ -8,7 +8,8 @@ module.exports = {
 	getPlanByID: getPlanByID,
 	addPlan: addPlan,
 	createUser: createUser,
-	updatePlanByID: updatePlanByID
+	updatePlanByID: updatePlanByID,
+	updateUser: updateUser
 }
 
 function updatePlanByID(req, res) {
@@ -92,7 +93,14 @@ function createUser(req, res) {
 
 function updateUser(req, res) {
 	var id = req.swagger.params.id.value;
-	var update = req.body.new_info;
 
-	
+	var user = {
+		'name':req.body.name != "" ? req.body.name:"John Doe",
+		'password':req.body.password != "" ? req.body.password:"abc123",
+		'id':id,
+		'plan_id':req.body.plan_id != "" ? req.body.plan_id:"127",
+		'friends':[1,2,7]
+	};
+
+	res.json(user);
 }
