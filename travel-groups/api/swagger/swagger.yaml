@@ -33,7 +33,9 @@ paths:
             $ref: "#/definitions/NewPlan"
       responses: 
         200: 
-          description: plan ok response
+          description: ok
+          schema: 
+            $ref: "#/definitions/Plan"
         default:
           description: Error
           schema: 

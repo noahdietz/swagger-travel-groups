@@ -5,7 +5,8 @@ var util = require('util');
 
 module.exports = {
 	getUserByID: getUserByID,
-	getPlanByID: getPlanByID
+	getPlanByID: getPlanByID,
+	addPlan: addPlan
 }
 
 function getPlanByID(req, res) {
@@ -33,4 +34,24 @@ function getUserByID(req, res) {
   };
 
   res.json(user);
+}
+
+function addPlan(req, res) {
+	var id = req.body.id;
+	var creater = req.body.creater;
+	var group_member = req.body.group_member;
+	var transportations = req.body.transportations;
+	var depature = req.body.depature;
+	var destination = req.body.destination;
+	var origin = req.body.origin;
+	var plan = {
+		"id": id,
+		"creater": creater,
+		"group_member": group_member,
+		"transportations": transportations,
+		"depature": depature,
+		"origin": origin,
+		"plan": plan
+	};
+	res.json(plan);
 }
