@@ -9,7 +9,7 @@ var SWAGGER_UI_PATH    = '/docs';
 var SWAGGER_UI_FILES   = './node_modules/swagger-ui/dist';
 
 var indexHtml = fs.readFileSync(path.join(SWAGGER_UI_FILES, 'index.html'), 'utf-8');
-var swagger_json = yaml.safeLoad(fs.readFileSync('./api/swagger/swagger.yaml', 'utf-8'));
+var swaggerJson = yaml.safeLoad(fs.readFileSync('./api/swagger/swagger.yaml', 'utf-8'));
 
 // put relative path for loading url in swagger-ui index.html
 indexHtml = indexHtml.replace(
@@ -20,7 +20,7 @@ indexHtml = indexHtml.replace(
 module.exports = function docsRouter(app) {
   // --------------------------- SwaggerUI -------------------------------------
   app.get("/docs/swagger/", function(req, res){
-    res.send(swagger_json); //return swagger json
+    res.send(swaggerJson); //return swagger json
   });
   // serve the modified index.html for swagger ui
   app.get(SWAGGER_UI_PATH, function(req, res) {
