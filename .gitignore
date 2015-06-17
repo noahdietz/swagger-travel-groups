@@ -1,2 +1,3 @@
 travel-groups/.gitignore
 .DS_Store
+travel-groups/node_modules
