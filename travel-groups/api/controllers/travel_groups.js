@@ -5,7 +5,8 @@ var util = require('util');
 
 module.exports = {
 	getUserByID: getUserByID,
-	getPlanByID: getPlanByID
+	getPlanByID: getPlanByID,
+	createUser: createUser
 }
 
 function getPlanByID(req, res) {
@@ -33,4 +34,19 @@ function getUserByID(req, res) {
   };
 
   res.json(user);
+}
+
+function createUser(req, res) {
+	var name = req.body.name;
+	var password = req.body.password;
+
+	var user = {
+		'name':name,
+		'password':password,
+		'id':12345,
+		'plan_id': 0,
+		'friends':[]
+	}
+
+	res.json(user);
 }

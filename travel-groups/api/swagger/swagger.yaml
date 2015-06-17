@@ -55,6 +55,8 @@ paths:
       responses:
         200:
           description: User information is OK
+          schema:
+            $ref: "#/definitions/User"
         default:
           description: Error
           schema: 
