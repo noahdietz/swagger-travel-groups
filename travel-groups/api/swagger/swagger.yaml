@@ -40,6 +40,24 @@ paths:
           description: Error
           schema: 
             $ref: "#/definitions/ErrorResponse"
+  /plan/{plan_id}/users:
+    x-swagger-router-controller: travel_groups
+    get:
+      summary: gets users of a plan
+      description: gets all users involved in specified plan
+      operationId: getPlanUsers
+      parameters:
+        - name: plan_id
+          in: path
+          description: id of the plan
+          required: true
+          type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/UserList'
+    
   /user:
     # binds a127 app logic to a route
     x-swagger-router-controller: travel_groups
@@ -258,3 +276,11 @@ definitions:
         type: string
       depature: 
         type: string
+  UserList:
+    required:
+      - users
+    properties:
+      users:
+        type: array
+        items:
+          $ref: '#/definitions/User'
