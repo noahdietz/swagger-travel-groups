@@ -78,40 +78,110 @@ var should = require('chai').should,
         done();
       });
     });
-    /*-------- End of user path testing --------*/
 
-    /*-------- Start of plan path testing --------*/
-    describe('plan', function(){
-
-      //addPlan test
-      it('should return 200 with key values', function(done){
-        api.post('/plan')
-        .set('Accept', 'application/json')
-        .send({
-          creater:127,
-          origin:'San Jose',
-          destination:'San Francisco',
-          depature:'9:00am'
-        })
-        .expect(200)
-        .end(function(err, res){
-          expect(res.body).to.have.property('id');
-          expect(res.body.id).to.equal(12345);
-          expect(res.body).to.have.property('creater');
-          expect(res.body.creater).to.equal(127);
-          expect(res.body).to.have.property('depature');
-          expect(res.body.depature).to.equal('9:00am');
-          expect(res.body).to.have.property('origin');
-          expect(res.body.origin).to.equal('San Jose');
-          expect(res.body).to.have.property('destination');
-          expect(res.body.destination).to.equal('San Francisco');
-          expect(res.body).to.have.property('group_member');
-          expect(res.body.group_member).to.have.length(0);
-          expect(res.body).to.have.property('transportations');
-          expect(res.body.transportations).to.have.length(0);
-          done();
-        })
+    //updateUser full update key value testing
+    it('should reflect the changes specified in request', function(done){
+      api.post('/user/300')
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .send({
+          name:'Noah Dietz',
+          password:'haon4321',
+          plan_id:321
+      })
+      .expect(200)
+      .end(function(err, res){
+        console.log("-------------"+err);
+        expect(res.body).to.have.property('name');
+        expect(res.body.name).to.equal('Noah Dietz');
+        expect(res.body).to.have.property('password');
+        expect(res.body.password).to.equal('haon4321');
+        expect(res.body).to.have.property('plan_id');
+        expect(res.body.plan_id).to.equal(321);
+        done();
       });
     });
-    /*-------- End of plan path testing --------*/
+
+
+
+    it('plan should relfect changes specified in request', function(done){
+      api.post('/user/123/plan')
+      .set('Accept', 'application/json')
+      .send({
+        creater:321,
+        depature:'2:23pm',
+        destination:'San Jose',
+        origin:'San Francisco',
+        group_member:1,
+        transportations:2
+      })
+      .expect(200)
+      .end(function(err, res){
+        expect(res.body).to.have.property('id');
+        expect(res.body.id).to.equal(12345);
+        expect(res.body).to.have.property('creater');
+        expect(res.body.creater).to.equal(321);
+        expect(res.body).to.have.property('depature');
+        expect(res.body.depature).to.equal('2:23pm');
+        expect(res.body).to.have.property('origin');
+        expect(res.body.origin).to.equal('San Francisco');
+        expect(res.body).to.have.property('destination');
+        expect(res.body.destination).to.equal('San Jose');
+        expect(res.body).to.have.property('group_member');
+        expect(res.body.group_member).to.have.length(2);
+        expect(res.body).to.have.property('transportations');
+        expect(res.body.transportations).to.have.length(2);
+        done();
+      });
+    });
   });
+
+  
+  /*-------- End of user path testing --------*/
+
+  /*-------- Start of plan path testing --------*/
+  describe('plan', function(){
+
+    //addPlan test
+    it('should return 200 with key values', function(done){
+      api.post('/plan')
+      .set('Accept', 'application/json')
+      .send({
+        creater:127,
+        origin:'San Jose',
+        destination:'San Francisco',
+        depature:'9:00am'
+      })
+      .expect(200)
+      .end(function(err, res){
+        expect(res.body).to.have.property('id');
+        expect(res.body.id).to.equal(12345);
+        expect(res.body).to.have.property('creater');
+        expect(res.body.creater).to.equal(127);
+        expect(res.body).to.have.property('depature');
+        expect(res.body.depature).to.equal('9:00am');
+        expect(res.body).to.have.property('origin');
+        expect(res.body.origin).to.equal('San Jose');
+        expect(res.body).to.have.property('destination');
+        expect(res.body.destination).to.equal('San Francisco');
+        expect(res.body).to.have.property('group_member');
+        expect(res.body.group_member).to.have.length(0);
+        expect(res.body).to.have.property('transportations');
+        expect(res.body.transportations).to.have.length(0);
+        done();
+      })
+    });
+
+    //getPlanUsers response length testing
+    it('should return all users a part of specified plan', function(done){
+      api.get('/plan/127/users')
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        expect(res.body).to.have.property('users');
+        expect(res.body.users).to.have.length(3);
+        done();
+      });
+    });
+  });
+  /*-------- End of plan path testing --------*/
