@@ -60,66 +60,90 @@ module.exports = {
 	updateUser: updateUser
 }
 
+/* update the information of the user */
 function updatePlanByID(req, res) {
 	var uid = req.swagger.params.id.value;
-	var id = users.find({_id: uid})
 	var dep = req.body.depature;
 	var dest = req.body.destination;
 	var orig = req.body.origin;
 	var gm = req.body.group_member;
 	var tp = req.body.transportations
-	if (dep != "") {
-		plans.update(
-			{_id: id},
-			{
-				$set: {
-					depature: dep
-				}
+	var username;
+	var pid;
+	User.findById(uid, function(err, doc) {
+		username = doc.name;
+		Plan.findOne({'creater': username}, function(err, doc) {
+			pid = doc._id;
+			console.log("############");
+			console.log(username);
+			console.log(pid);
+			console.log("############");
+			if (dep != "") {
+				Plan.update(
+					{_id: pid},
+					{
+						$set: {
+							depature: dep
+						}
+					}, function(err, updated) {
+						//err checking
+					}
+				);
 			}
-		);
-	}
-	if (dest != "") {
-		plans.update(
-			{_id: id},
-			{
-				$set: {
-					destination: dest
-				}
+			if (dest != "") {
+				Plan.update(
+					{_id: pid},
+					{
+						$set: {
+							destination: dest
+						}
+					}, function(err, updated) {
+						//err checking
+					}
+				);
 			}
-		);
-	}
-	if (orig != "") {
-		plans.update(
-			{_id: id},
-			{
-				$set: {
-					origin: orig
-				}
+			if (orig != "") {
+				Plan.update(
+					{_id: pid},
+					{
+						$set: {
+							origin: orig
+						}
+					}, function(err, updated) {
+						//err checking
+					}
+				);
 			}
-		);
-	}
-	if (gm != "") {
-		plans.update(
-			{_id: id},
-			{
-				$addToSet: {
-					group_member: gm
-				}
+			if (gm != "") {
+				Plan.update(
+					{_id: pid},
+					{
+						$addToSet: {
+							group_member: gm
+						}
+					}, function(err, updated) {
+						//err checking
+					}
+				);
 			}
-		);
-	}
-	if (tp != "") {
-		plans.update(
-			{_id: id},
-			{
-				$addToSet: {
-					transportation: tp
-				}
+			if (tp != "") {
+				Plan.update(
+					{_id: pid},
+					{
+						$addToSet: {
+							transportations: tp
+						}
+					}, function(err, updated) {
+						//err checking
+					}
+				);
 			}
-		);
-	}
-	var plan = util.format('A plan has been updated!/n');
-	res.json(plan);
+			var plan = util.format('A plan has been updated!/n');
+			res.json(plan);
+		
+		});
+	});
+	
 }
 
 function getPlanByID(req, res) {
@@ -207,6 +231,7 @@ function createUser(req, res) {
 
 function updateUser(req, res) {
 	var id = req.swagger.params.id.value;
+	
 
 	var user = {
 		'name':req.body.name != "" ? req.body.name:"John Doe",
