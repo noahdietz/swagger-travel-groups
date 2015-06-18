@@ -95,9 +95,9 @@ paths:
           type: number
         - name: creater
           in: formData
-          description: ID of the user
+          description: name of the user
           required: true
-          type: number
+          type: string 
         - name: depature
           in: formData
           description: Depature Time
@@ -251,7 +251,7 @@ definitions:
       - creater
     properties:
       creater:
-        type: number
+        type: string
       origin:
         type: string
       destination:

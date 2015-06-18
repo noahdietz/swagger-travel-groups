@@ -7,8 +7,10 @@ var conf = new Config();
 var users;
 var plans;
 var transportations;
-var counters1; 
-var counters2;
+
+console.log("########");
+console.log(conf.url);
+console.log(process.env.NODE_ENV);
 
 mongodb.MongoClient.connect(conf.url, function(err, db) {
 	if(err) throw err;
@@ -16,47 +18,8 @@ mongodb.MongoClient.connect(conf.url, function(err, db) {
 	users = db.collection('users');
 	plans = db.collection('plans');
 	transportations = db.collection('transportations');
-	// counters1 = db.collection('counters1');
-// 	counters2 = db.collection('counters2');
-// 	counters1.insert(
-// 		{
-// 			_id: 'userid',
-// 			seq: 0
-// 		}
-// 		, function(err, inserted) {
-// 			//err checking
-// 		});
-// 	counters2.insert(
-// 		{
-// 			_id: 'planid',
-// 			seq: 0
-// 		}
-// 		, function(err, inserted) {
-// 			//err checking
-// 		});
 });
 
-// function getNextSequence(name) {
-// 	var ret = counters1.findAndModify(
-// 		{
-// 			query: {_id: name},
-// 			update: {$inc: {seq: 1}},
-// 			new: true
-// 		}
-// 	);
-// 	return ret.seq;
-// };
-//
-// function getNextSequence2(name) {
-// 	var ret = counters2.findAndModify(
-// 		{
-// 			query: {_id: name},
-// 			update: {$inc: {seq: 1}},
-// 			new: true
-// 		}
-// 	);
-// 	return ret.seq;
-// };
 
 module.exports = {
 	getUserByID: getUserByID,
@@ -125,15 +88,6 @@ function updatePlanByID(req, res) {
 			}
 		);
 	}
-	// var plan = {
-// 		"id": 12345,
-// 		"creater": creater,
-// 		"group_member": [11,22],
-// 		"transportations": [22,1223],
-// 		"depature": depature,
-// 		"destination": destination,
-// 		"origin": origin,
-// 	};
 	var plan = util.format('A plan has been updated!/n');
 	res.json(plan);
 }
@@ -166,45 +120,48 @@ function getUserByID(req, res) {
   res.json(user);
 }
 
+/* when you post a request /plan, a plan object will be created */
 function addPlan(req, res) {
 	var who = req.body.creater;
 	var dep = req.body.depature;
 	var dest = req.body.destination;
 	var orig = req.body.origin;
-	var planID = getNextSequence2('planid');
 	plans.insert(
 		{
-			_id: planID,
 			creater: who,
 			depature: dep,
 			group_member: [],
 			transportations: [],
 			destination: dest,
-			origin: origin
+			origin: orig
 			
+		}, function(err, inserted) {
+			//err checking
 		}
 	);
+	var myCursor = plans.find().limit(1).sort({$natural: -1});
+	console.log(myCursor);
+	var myDocument = myCursor.hasNext() ? myCursor.next() : null;
+	var planID;
+	if (myDocument) {
+		planID = myDocument._id;
+		console.log(planID);
+	}
 	users.update(
-		{_id: who},
+		{name: who},
 		{
 			$set: {
 				plan_id: planID
 			}
+		}, function(err, updated) {
+			//err checking
 		}
 	);
-	// var plan = {
-// 		"id": 12345,
-// 		"creater": creater,
-// 		"group_member": [],
-// 		"transportations": [],
-// 		"depature": depature,
-// 		"destination": destination,
-// 		"origin": origin,
-// 	};
 	var plan = util.format('A plan has been created!/n');
 	res.json(plan);
 }
 
+/* when you post a request, a user object will be created */
 function createUser(req, res) {
 	var n = req.body.name;
 	var pwd = req.body.password;
@@ -220,14 +177,6 @@ function createUser(req, res) {
 	, function(err, inserted) {
 		// err checking
 	})
-
-	// var user = {
-// 		'name':n,
-// 		'password':pwd,
-// 		'id':12345,
-// 		'plan_id': 0,
-// 		'friends':[]
-// 	};
 	var user = util.format('A user has been created!/n');
 	res.json(user);
 }
