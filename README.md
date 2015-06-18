@@ -24,6 +24,6 @@ The testing stack is made up of [Mocha](http://mochajs.org/#running-mochas-tests
 
 In order to run the testing suite for the Travel Groups API, run the following command:
 	
-	mocha --recursive
+	npm test
 
 The following output is the result of the all the test files.
