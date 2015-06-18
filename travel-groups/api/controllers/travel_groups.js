@@ -60,7 +60,7 @@ module.exports = {
 	updateUser: updateUser
 }
 
-/* update the information of the user */
+/* update the information of the plan by the userID */
 function updatePlanByID(req, res) {
 	var uid = req.swagger.params.id.value;
 	var dep = req.body.depature;
@@ -74,11 +74,7 @@ function updatePlanByID(req, res) {
 		username = doc.name;
 		Plan.findOne({'creater': username}, function(err, doc) {
 			pid = doc._id;
-			console.log("############");
-			console.log(username);
-			console.log(pid);
-			console.log("############");
-			if (dep != "") {
+			if (dep !== null) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -90,7 +86,7 @@ function updatePlanByID(req, res) {
 					}
 				);
 			}
-			if (dest != "") {
+			if (dest !== null) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -102,7 +98,7 @@ function updatePlanByID(req, res) {
 					}
 				);
 			}
-			if (orig != "") {
+			if (orig !== null) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -114,7 +110,7 @@ function updatePlanByID(req, res) {
 					}
 				);
 			}
-			if (gm != "") {
+			if (gm !== null) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -126,7 +122,7 @@ function updatePlanByID(req, res) {
 					}
 				);
 			}
-			if (tp != "") {
+			if (tp !== null) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -146,32 +142,53 @@ function updatePlanByID(req, res) {
 	
 }
 
+/* get the plan information by user ID */
 function getPlanByID(req, res) {
 	var id = req.swagger.params.id.value;
-	var who = plans.find({})
-	var plan = {
-		"id": 11111,
-		"creater": id,
-		"group_member": [],
-		"transportations": [],
-		"depature": "3:00 pm",
-		"destination": "San Francisco",
-		"origin": "San Jose"
-	};
-	res.json(plan);
+    User.findById(id, function(err, doc) {
+    	var pid = doc.plan_id;
+		Plan.findById(pid, function(err, doc) {
+			var id = doc._id;
+			var creater = doc.creater;
+			var depature = doc.depature;
+			var destination = doc.destination;
+			var origin = doc.origin;
+			var group_member = doc.group_member;
+			var transportations = doc.transportation;
+			var plan = {
+				"id": id,
+				"creater": creater,
+				"depature": depature,
+				"destination": destination,
+				"origin": origin,
+				"group_member": group_member,
+				"transportations": group_member
+			};
+			console.log("#########");
+			console.log(plan);
+			res.json(plan);
+		});
+    });
 }
 
+/* get the user information by ID */
 function getUserByID(req, res) {
   var id = req.swagger.params.id.value;
-  var user = {
-  	'name':'John Doe',
-  	'password':'test1234',
-  	'id':id,
-  	'plan_id':1234567,
-  	'friends':[]
-  };
-
-  res.json(user);
+  User.findById(id, function(err, doc) {
+	  var id = doc.id;
+	  var name = doc.name; 
+	  var password = doc.password;
+	  var plan_id = doc.plan_id;
+	  var friends = doc.friends;
+	  var user = {
+		  "id": id,
+		  "name": name,
+		  "password": password,
+		  "plan_id": plan_id,
+		  "friends": friends
+	  };
+	  res.json(user);
+  });
 }
 
 /* when you post a request /plan, a plan object will be created */
@@ -193,9 +210,6 @@ function addPlan(req, res) {
 	newPlan.save();
 	
 	var planID = newPlan._id;
-	
-	console.log("#####");
-	console.log(planID);
 	
 	User.update(
 		{name: who},
@@ -229,17 +243,52 @@ function createUser(req, res) {
 	res.json(user);
 }
 
+/* update the information of the user by userID */
 function updateUser(req, res) {
 	var id = req.swagger.params.id.value;
-	
-
-	var user = {
-		'name':req.body.name != "" ? req.body.name:"John Doe",
-		'password':req.body.password != "" ? req.body.password:"abc123",
-		'id':id,
-		'plan_id':req.body.plan_id != "" ? req.body.plan_id:"127",
-		'friends':[1,2,7]
-	};
-
-	res.json(user);
+	var n = req.body.name;
+	var pwd = req.body.name;
+	var f = req.body.friends;
+	console.log("########");
+	console.log(f);
+	User.findById(id, function(err, doc) {
+		if (n !== null) {
+			User.update(
+				{_id: id},
+				{
+					$set: {
+						name: name
+					}
+				}, function(err, updated) {
+					//err checking
+				}
+			);
+		}
+		if (pwd !== null) {
+			User.update(
+				{_id: id},
+				{
+					$set: {
+						password: pwd
+					}
+				}, function(err, updated) {
+					//err checking
+				}
+			);
+		}
+		if (f !== null) {
+			User.update(
+				{_id: id},
+				{
+					$addToSet: {
+						friends: f
+					}
+				}, function(err, updated) {
+					//err checking
+				}
+			);
+		}
+		var plan = util.format('The user has been updated!/n');
+		res.json(plan);
+		});
 }

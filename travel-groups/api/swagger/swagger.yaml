@@ -218,9 +218,9 @@ definitions:
     properties:
       name:
         type: string
-      plan_id:
-        type: string
       password:
+        type: string
+      friends:
         type: string
         
   Plan: 
