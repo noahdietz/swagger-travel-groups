@@ -8,13 +8,17 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
-    "chai": "^3.0.0",
-    "express": "^4.12.3",
-    "js-yaml": "^3.3.1",
-    "serve-static": "^1.9.3",
-    "swagger-ui": "^2.1.0",
-    "mocha": "^2.2.5",
-    "swagger-express-mw": "0.0.x"
+	"chai": "^3.0.0",
+	"express": "^4.12.3",
+	"js-yaml": "^3.3.1",
+	"serve-static": "^1.9.3",
+	"swagger-ui": "^2.1.0",
+	"mocha": "^2.2.5",
+	"swagger-express-mw": "0.0.x",
+	"connect": "^3.3.5",
+	"dotenv": "^1.1.0",
+	"mongodb": "~1.4.19",
+	"swagger-tools": "^0.8.7"
   },
   "devDependencies": {
     "should": "^5.2.0",

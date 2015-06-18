@@ -91,7 +91,7 @@ paths:
           in: path
           description: ID of the user
           required: true
-          type: number
+          type: string
       responses: 
         200: 
           description: ok
@@ -108,14 +108,9 @@ paths:
       parameters: 
         - name: id
           in: path
-          description: ID of the plan
-          required: true
-          type: number
-        - name: creater
-          in: formData
           description: ID of the user
           required: true
-          type: number
+          type: string
         - name: depature
           in: formData
           description: Depature Time
@@ -133,11 +128,11 @@ paths:
         - name: group_member
           in: formData
           description: member to add
-          type: number
+          type: string
         - name: transportations
           in: formData
           description: transportation to add
-          type: number 
+          type: string 
       responses: 
         200: 
           description: ok
@@ -158,8 +153,7 @@ paths:
           in: path
           description: ID of user to fetch
           required: true
-          type: integer
-          format: int64
+          type: string
       responses:
         200:
           description: target user found
@@ -178,8 +172,7 @@ paths:
           in: path
           description: id of user to be updated
           required: true
-          type: integer
-          format: int64
+          type: string
         - name: new_info
           in: body
           description: new user information
@@ -201,7 +194,7 @@ definitions:
   Transportation:
     properties:
       id: 
-        type: number
+        type: string
       which_method:
         type: string
       arrival:
@@ -222,13 +215,13 @@ definitions:
       - id
     properties:
       id:
-        type: number
+        type: string
       plan_id:
-        type: number
+        type: string
       friends:
         type: array
         items:
-            type: number
+            type: string
   NewUser:
     required:
       - name
@@ -243,9 +236,9 @@ definitions:
     properties:
       name:
         type: string
-      plan_id:
-        type: number
       password:
+        type: string
+      friends:
         type: string
         
   Plan: 
@@ -255,21 +248,21 @@ definitions:
         - id
     properties:
         id: 
-          type: number
+          type: string
         group_member:
           type: array
           items: 
-            type: number
+            type: string
         transportations: 
           type: array
           items: 
-            type: number
+            type: string
   NewPlan: 
     required:
       - creater
     properties:
       creater:
-        type: number
+        type: string
       origin:
         type: string
       destination:
