@@ -165,8 +165,7 @@ function getPlanByID(req, res) {
 				"group_member": group_member,
 				"transportations": group_member
 			};
-			console.log("#########");
-			console.log(plan);
+
 			res.json(plan);
 		});
     });
@@ -250,8 +249,7 @@ function updateUser(req, res) {
 	var n = req.body.name;
 	var pwd = req.body.name;
 	var f = req.body.friends;
-	console.log("########");
-	console.log(f);
+
 	User.findById(id, function(err, doc) {
 		if (n !== null) {
 			User.update(
@@ -292,4 +290,9 @@ function updateUser(req, res) {
 		var plan = util.format('The user has been updated!/n');
 		res.json(plan);
 		});
+}
+
+function getPlanUsers(req, res) {
+
+
 }
