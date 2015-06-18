@@ -54,6 +54,30 @@ var should = require('chai').should,
         done();
       });
     });
+
+    //getPlanByID key-value testing
+    it('should return the plan of the specified user', function(done){
+      api.get('/user/127/plan')
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        expect(res.body).to.have.property('id');
+        expect(res.body.id).to.equal(11111);
+        expect(res.body).to.have.property('creater');
+        expect(res.body.creater).to.equal(127);
+        expect(res.body).to.have.property('depature');
+        expect(res.body.depature).to.equal('3:00 pm');
+        expect(res.body).to.have.property('origin');
+        expect(res.body.origin).to.equal('San Jose');
+        expect(res.body).to.have.property('destination');
+        expect(res.body.destination).to.equal('San Francisco');
+        expect(res.body).to.have.property('group_member');
+        expect(res.body.group_member).to.have.length(0);
+        expect(res.body).to.have.property('transportations');
+        expect(res.body.transportations).to.have.length(0);
+        done();
+      });
+    });
     /*-------- End of user path testing --------*/
 
     /*-------- Start of plan path testing --------*/
