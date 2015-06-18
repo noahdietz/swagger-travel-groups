@@ -6,13 +6,6 @@ var should = require('chai').should,
 
   /*-------- Start of user path testing --------*/
   describe('user', function(){
-    //getUserByID response testing
-    it('should return 200 OK response', function(done){
-      api.get('/user/1')
-        .set('Accept', 'application/json')
-        .expect(200, done);
-    });
-
     //getUserByID key-value testing
     it('should return an object with keys and values', function(done){
       api.get('/user/1')
@@ -80,7 +73,7 @@ var should = require('chai').should,
     });
 
     //updateUser full update key value testing
-    it('should reflect the changes specified in request', function(done){
+    it('should reflect the full changes specified in request', function(done){
       api.post('/user/300')
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
@@ -91,7 +84,6 @@ var should = require('chai').should,
       })
       .expect(200)
       .end(function(err, res){
-        console.log("-------------"+err);
         expect(res.body).to.have.property('name');
         expect(res.body.name).to.equal('Noah Dietz');
         expect(res.body).to.have.property('password');
@@ -102,9 +94,86 @@ var should = require('chai').should,
       });
     });
 
+    //updateUser partial (name) update key value testing
+    it('should reflect the name change specified in the request', function(done){
+      api.post('/user/300')
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .send({
+        name:'Jim Smith',
+        password:'',
+        plan_id:0
+      })
+      .expect(200)
+      .end(function(err, res){
+        expect(res.body).to.have.property('name');
+        expect(res.body.name).to.equal('Jim Smith');
+        expect(res.body).to.have.property('id');
+        expect(res.body.id).to.equal(300);
+        expect(res.body).to.have.property('password');
+        expect(res.body.password).to.equal('abc123');
+        expect(res.body).to.have.property('plan_id');
+        expect(res.body.plan_id).to.equal(127);
+        expect(res.body).to.have.property('friends');
+        expect(res.body.friends).to.have.length(3);
+        done();
+      });
+    });
 
+    //updateUser partial (password) update key value testing
+    it('should reflect the password change specified in the request', function(done){
+      api.post('/user/300')
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .send({
+        name:'',
+        password:'zyxw',
+        plan_id:0
+      })
+      .expect(200)
+      .end(function(err, res){
+        expect(res.body).to.have.property('name');
+        expect(res.body.name).to.equal('John Doe');
+        expect(res.body).to.have.property('id');
+        expect(res.body.id).to.equal(300);
+        expect(res.body).to.have.property('password');
+        expect(res.body.password).to.equal('zyxw');
+        expect(res.body).to.have.property('plan_id');
+        expect(res.body.plan_id).to.equal(127);
+        expect(res.body).to.have.property('friends');
+        expect(res.body.friends).to.have.length(3);
+        done();
+      });
+    });
 
-    it('plan should relfect changes specified in request', function(done){
+    //updateUser partial (plan_id) update key value testing
+    it('should reflect the password change specified in the request', function(done){
+      api.post('/user/300')
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .send({
+        name:'',
+        password:'',
+        plan_id:999
+      })
+      .expect(200)
+      .end(function(err, res){
+        expect(res.body).to.have.property('name');
+        expect(res.body.name).to.equal('John Doe');
+        expect(res.body).to.have.property('id');
+        expect(res.body.id).to.equal(300);
+        expect(res.body).to.have.property('password');
+        expect(res.body.password).to.equal('abc123');
+        expect(res.body).to.have.property('plan_id');
+        expect(res.body.plan_id).to.equal(999);
+        expect(res.body).to.have.property('friends');
+        expect(res.body.friends).to.have.length(3);
+        done();
+      });
+    });
+
+    //updatePlanByID full update key value testing
+    it('plan should relfect full changes specified in request', function(done){
       api.post('/user/123/plan')
       .set('Accept', 'application/json')
       .send({

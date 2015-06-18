@@ -99,7 +99,7 @@ function updateUser(req, res) {
 		'name':req.body.name != "" ? req.body.name:"John Doe",
 		'password':req.body.password != "" ? req.body.password:"abc123",
 		'id':id,
-		'plan_id':req.body.plan_id != "" ? req.body.plan_id:"127",
+		'plan_id':req.body.plan_id != 0 ? req.body.plan_id:127,
 		'friends':[1,2,7]
 	};
 
