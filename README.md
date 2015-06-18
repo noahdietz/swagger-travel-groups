@@ -17,3 +17,13 @@ Then, in your browser, navigate to the following url:
 	http://localhost:10010/docs
 
 This will open the Travel Groups API for viewing/testing.
+
+## travel-groups testing
+
+The testing stack is made up of [Mocha](http://mochajs.org/#running-mochas-tests), [Chai](http://chaijs.com) and [SuperTest](https://www.npmjs.com/package/supertest)
+
+In order to run the testing suite for the Travel Groups API, run the following command:
+	
+	mocha --recursive
+
+The following output is the result of the all the test files.
