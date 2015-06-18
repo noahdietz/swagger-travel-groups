@@ -1,24 +1,44 @@
 'use strict';
 
 var util = require('util');
-var mongodb = require('mongodb');
+// var mongodb = require('mongodb');
+var mongoose = require('mongoose');
+var uriUtil = require('mongodb-uri');
 var Config = require('./config');
 var conf = new Config();
 var users;
 var plans;
 var transportations;
 
-console.log("########");
-console.log(conf.url);
-console.log(process.env.NODE_ENV);
+var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, 
+                replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };  
 
-mongodb.MongoClient.connect(conf.url, function(err, db) {
-	if(err) throw err;
+var mongodbUri = conf.url;
+var mongooseUri = uriUtil.formatMongoose(mongodbUri);
 
-	users = db.collection('users');
-	plans = db.collection('plans');
-	transportations = db.collection('transportations');
+mongoose.conncet(mongooseUri, options);
+
+var db = mongoose.conncetion;
+
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', function callback() {
+	
+	//create user schema
+	var userScehma = mongoose.Schema({
+		name: String,
+		password: String,
+		plan_id: Number,
+		friends: Array
+	});
 });
+
+// mongodb.MongoClient.connect(conf.url, function(err, db) {
+// 	if(err) throw err;
+//
+// 	users = db.collection('users');
+// 	plans = db.collection('plans');
+// 	transportations = db.collection('transportations');
+// });
 
 
 module.exports = {
