@@ -19,5 +19,10 @@
   "devDependencies": {
     "should": "^5.2.0",
     "supertest": "^0.15.0"
+  },
+  "scripts": {
+    "test":"mocha --recursive",
+
+    "pretest": "npm install"
   }
 }
