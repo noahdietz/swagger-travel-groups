@@ -1,45 +1,55 @@
 'use strict';
 
 var util = require('util');
-// var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 var uriUtil = require('mongodb-uri');
 var Config = require('./config');
 var conf = new Config();
-var users;
-var plans;
-var transportations;
+var User;
+var Plan;
+var Trans;
 
 var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, 
                 replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };  
 
 var mongodbUri = conf.url;
+
 var mongooseUri = uriUtil.formatMongoose(mongodbUri);
 
-mongoose.conncet(mongooseUri, options);
+mongoose.connect(mongooseUri, options);
 
-var db = mongoose.conncetion;
+var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function callback() {
 	
 	//create user schema
-	var userScehma = mongoose.Schema({
+	var userSchema = mongoose.Schema({
 		name: String,
 		password: String,
-		plan_id: Number,
-		friends: Array
+		plan_id: String,
+		friends: [String]
 	});
+	
+	var planSchema = mongoose.Schema({
+		creater: String,
+		depature: String,
+		destination: String,
+		origin: String,
+		group_member: [String],
+		transportations: [String]
+	});
+	
+	var transportationSchema = mongoose.Schema({
+		arrival: String,
+		intr_places: String,
+		which_method: String
+	});
+	
+	User = mongoose.model('users', userSchema);
+	Plan = mongoose.model('plans', planSchema);
+	Trans = mongoose.model('transportations', transportationSchema);
 });
-
-// mongodb.MongoClient.connect(conf.url, function(err, db) {
-// 	if(err) throw err;
-//
-// 	users = db.collection('users');
-// 	plans = db.collection('plans');
-// 	transportations = db.collection('transportations');
-// });
-
 
 module.exports = {
 	getUserByID: getUserByID,
@@ -146,28 +156,24 @@ function addPlan(req, res) {
 	var dep = req.body.depature;
 	var dest = req.body.destination;
 	var orig = req.body.origin;
-	plans.insert(
-		{
-			creater: who,
-			depature: dep,
-			group_member: [],
-			transportations: [],
-			destination: dest,
-			origin: orig
-			
-		}, function(err, inserted) {
-			//err checking
-		}
-	);
-	var myCursor = plans.find().limit(1).sort({$natural: -1});
-	console.log(myCursor);
-	var myDocument = myCursor.hasNext() ? myCursor.next() : null;
-	var planID;
-	if (myDocument) {
-		planID = myDocument._id;
-		console.log(planID);
-	}
-	users.update(
+	
+	var newPlan = new Plan({
+		creater: who, 
+		depature: dep, 
+		group_member: [],
+		transportation: [],
+		destination: dest,
+		origin: orig
+	});
+	
+	newPlan.save();
+	
+	var planID = newPlan._id;
+	
+	console.log("#####");
+	console.log(planID);
+	
+	User.update(
 		{name: who},
 		{
 			$set: {
@@ -186,17 +192,15 @@ function createUser(req, res) {
 	var n = req.body.name;
 	var pwd = req.body.password;
 	
-	users.insert(
-		{
-			name: n,
-			password: pwd,
-		    plan_id: 0,
-			friends: []
-			
-		}
-	, function(err, inserted) {
-		// err checking
-	})
+	var newUser = new User({
+		name: n,
+		password: pwd,
+		plan_id: 0,
+		friends:[]
+	});
+	
+	newUser.save();
+	
 	var user = util.format('A user has been created!/n');
 	res.json(user);
 }
