@@ -9,7 +9,8 @@ module.exports = {
 	addPlan: addPlan,
 	createUser: createUser,
 	updatePlanByID: updatePlanByID,
-	updateUser: updateUser
+	updateUser: updateUser,
+	getPlanUsers: getPlanUsers
 }
 
 function updatePlanByID(req, res) {
@@ -103,4 +104,33 @@ function updateUser(req, res) {
 	};
 
 	res.json(user);
+}
+
+function getPlanUsers(req, res) {
+	var plan_id = req.swagger.params.plan_id.value;
+
+	var users = {'users':[
+		{
+			'name':'John Doe',
+			'password':'test1234',
+			'id':101,
+			'plan_id':1234567,
+			'friends':[127, 721]
+		},
+		{
+			'name':'Jane Smith',
+			'password':'1234test',
+			'id':127,
+			'plan_id':10010,
+			'friends':[101, 721]
+		},
+		{
+			'name':'Ricky Bobby',
+			'password':'abcdefg',
+			'id':721,
+			'plan_id':3000,
+			'friends':[101, 127]
+		}]};
+
+	res.json(users);
 }
