@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/noahdietz/swagger-travel-groups.svg?branch=travis_branch)](https://travis-ci.org/noahdietz/swagger-travel-groups)
+
 # swagger-travel-groups
 by Noah Dietz and Linje Peng
 
