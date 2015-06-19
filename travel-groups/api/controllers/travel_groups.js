@@ -135,7 +135,22 @@ function updatePlanByID(req, res) {
 					}
 				);
 			}
-			var plan = util.format('A plan has been updated!/n');
+			var id = doc._id;
+			var creater = doc.creater;
+			var depature = doc.depature;
+			var destination = doc.destination;
+			var origin = doc.origin;
+			var group_member = doc.group_member;
+			var transportations = doc.transportations;
+			var plan = {
+				"id": id,
+				"creater": creater,
+				"depature": depature,
+				"destination": destination,
+				"origin": origin,
+				"group_member": group_member,
+				"transportations": transportations
+			};
 			res.json(plan);
 
 		});
@@ -163,7 +178,7 @@ function getPlanByID(req, res) {
 				"destination": destination,
 				"origin": origin,
 				"group_member": group_member,
-				"transportations": group_member
+				"transportations": transportations
 			};
 
 			res.json(plan);
@@ -221,7 +236,23 @@ function addPlan(req, res) {
 			//err checking
 		}
 	);
-	var plan = util.format('A plan has been created!/n');
+	
+	var id = newPlan._id;
+	var creater = newPlan.creater;
+	var depature = newPlan.depature;
+	var destination = newPlan.destination;
+	var origin = newPlan.origin;
+	var group_member = newPlan.group_member;
+	var transportations = newPlan.transportation;
+	var plan = {
+		"id": id,
+		"creater": creater,
+		"depature": depature,
+		"destination": destination,
+		"origin": origin,
+		"group_member": group_member,
+		"transportations": transportations
+	};
 	res.json(plan);
 }
 
@@ -238,8 +269,18 @@ function createUser(req, res) {
 	});
 
 	newUser.save();
-
-	var user = util.format('A user has been created!/n');
+	var id = newUser.id;
+	var name = newUser.name;
+	var password = newUser.password;
+	var plan_id = newUser.plan_id;
+	var friends = newUser.friends;
+	var user = {
+	  "id": id,
+	  "name": name,
+	  "password": password,
+	  "plan_id": plan_id,
+	  "friends": friends
+	};
 	res.json(user);
 }
 
@@ -256,7 +297,7 @@ function updateUser(req, res) {
 				{_id: id},
 				{
 					$set: {
-						name: name
+						name: n
 					}
 				}, function(err, updated) {
 					//err checking
@@ -287,8 +328,19 @@ function updateUser(req, res) {
 				}
 			);
 		}
-		var plan = util.format('The user has been updated!/n');
-		res.json(plan);
+  	  var id = doc.id;
+  	  var name = doc.name;
+  	  var password = doc.password;
+  	  var plan_id = doc.plan_id;
+  	  var friends = doc.friends;
+  	  var user = {
+  		  "id": id,
+  		  "name": name,
+  		  "password": password,
+  		  "plan_id": plan_id,
+  		  "friends": friends
+  	  };
+  	  res.json(user);
 		});
 }
 
