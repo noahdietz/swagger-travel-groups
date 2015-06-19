@@ -289,6 +289,7 @@ function updateUser(req, res) {
 		var plan = util.format('The user has been updated!/n');
 		res.json(plan);
 		});
+
 }
 
 function getPlanUsers(req, res) {

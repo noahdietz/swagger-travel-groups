@@ -19,6 +19,11 @@
 	"dotenv": "^1.1.0",
 	"mongodb": "~1.4.19",
 	"swagger-tools": "^0.8.7"
+    "connect": "^3.3.5",
+    "dotenv": "^1.1.0",
+    "mongodb": "~1.4.19",
+    "swagger-tools": "^0.8.7"
+
   },
   "devDependencies": {
     "should": "^5.2.0",
