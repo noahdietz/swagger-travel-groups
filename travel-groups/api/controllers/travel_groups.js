@@ -75,7 +75,7 @@ function updatePlanByID(req, res) {
 		username = doc.name;
 		Plan.findOne({'creater': username}, function(err, doc) {
 			pid = doc._id;
-			if (dep !== null) {
+			if (dep !== undefined) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -87,7 +87,7 @@ function updatePlanByID(req, res) {
 					}
 				);
 			}
-			if (dest !== null) {
+			if (dest !== undefined) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -99,7 +99,7 @@ function updatePlanByID(req, res) {
 					}
 				);
 			}
-			if (orig !== null) {
+			if (orig !== undefined) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -111,7 +111,7 @@ function updatePlanByID(req, res) {
 					}
 				);
 			}
-			if (gm !== null) {
+			if (gm !== undefined) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -123,7 +123,7 @@ function updatePlanByID(req, res) {
 					}
 				);
 			}
-			if (tp !== null) {
+			if (tp !== undefined) {
 				Plan.update(
 					{_id: pid},
 					{
@@ -251,7 +251,7 @@ function updateUser(req, res) {
 	var f = req.body.friends;
 
 	User.findById(id, function(err, doc) {
-		if (n !== null) {
+		if (n !== undefined) {
 			User.update(
 				{_id: id},
 				{
@@ -263,7 +263,7 @@ function updateUser(req, res) {
 				}
 			);
 		}
-		if (pwd !== null) {
+		if (pwd !== undefined) {
 			User.update(
 				{_id: id},
 				{
@@ -275,7 +275,7 @@ function updateUser(req, res) {
 				}
 			);
 		}
-		if (f !== null) {
+		if (f !== undefined) {
 			User.update(
 				{_id: id},
 				{
