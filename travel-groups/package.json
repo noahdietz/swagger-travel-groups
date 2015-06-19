@@ -8,7 +8,7 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
-    "chai": "^3.0.0",
+	"chai": "^3.0.0",
     "express": "^4.12.3",
     "js-yaml": "^3.3.1",
     "mocha": "^2.2.5",
@@ -28,8 +28,7 @@
   },
   "scripts": {
     "test": "mocha --recursive",
-    "start": "swagger project start",
-
+    "start": "swagger project start",    
     "pretest": "npm install",
     "prestart": "npm install"
   }

@@ -10,7 +10,7 @@ var Plan;
 var Trans;
 
 var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, 
-                replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };  
+        replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };  
 
 var mongodbUri = conf.url;
 
@@ -92,7 +92,7 @@ function updatePlanByID(req, res) {
 					{_id: pid},
 					{
 						$set: {
-							destination: dest
+							de  stination: dest
 						}
 					}, function(err, updated) {
 						//err checking
@@ -161,8 +161,8 @@ function updatePlanByID(req, res) {
 /* get the plan information by user ID */
 function getPlanByID(req, res) {
 	var id = req.swagger.params.id.value;
-    User.findById(id, function(err, doc) {
-    	var pid = doc.plan_id;
+  User.findById(id, function(err, doc) {
+  	var pid = doc.plan_id;
 		Plan.findById(pid, function(err, doc) {
 			var id = doc._id;
 			var creater = doc.creater;
@@ -182,7 +182,7 @@ function getPlanByID(req, res) {
 			};
 			res.json(plan);
 		});
-    });
+  });
 }
 
 /* get the user information by ID */
@@ -345,13 +345,13 @@ function updateUser(req, res) {
 
 function getPlanUsers(req, res) {
 	var id = req.swagger.params.plan_id.value;
-    Plan.findById(id, function(err, doc) {
+  Plan.findById(id, function(err, doc) {
 		var creater = doc.creater;
 		var members = doc.group_member;
-  	    members.push(creater);
+  	  members.push(creater);
   	  	var user = {
   		  "users": members
   	  };
   	  res.json(user);
-    });
+  });
 }
