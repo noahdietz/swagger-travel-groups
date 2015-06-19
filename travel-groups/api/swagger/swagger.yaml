@@ -51,7 +51,7 @@ paths:
           in: path
           description: id of the plan
           required: true
-          type: number
+          type: string
       responses:
         200:
           description: OK

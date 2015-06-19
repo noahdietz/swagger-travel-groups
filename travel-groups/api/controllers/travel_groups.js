@@ -137,10 +137,10 @@ function updatePlanByID(req, res) {
 			}
 			var plan = util.format('A plan has been updated!/n');
 			res.json(plan);
-		
+
 		});
 	});
-	
+
 }
 
 /* get the plan information by user ID */
@@ -176,7 +176,7 @@ function getUserByID(req, res) {
   var id = req.swagger.params.id.value;
   User.findById(id, function(err, doc) {
 	  var id = doc.id;
-	  var name = doc.name; 
+	  var name = doc.name;
 	  var password = doc.password;
 	  var plan_id = doc.plan_id;
 	  var friends = doc.friends;
@@ -197,20 +197,20 @@ function addPlan(req, res) {
 	var dep = req.body.depature;
 	var dest = req.body.destination;
 	var orig = req.body.origin;
-	
+
 	var newPlan = new Plan({
-		creater: who, 
-		depature: dep, 
+		creater: who,
+		depature: dep,
 		group_member: [],
 		transportation: [],
 		destination: dest,
 		origin: orig
 	});
-	
+
 	newPlan.save();
-	
+
 	var planID = newPlan._id;
-	
+
 	User.update(
 		{name: who},
 		{
@@ -229,16 +229,16 @@ function addPlan(req, res) {
 function createUser(req, res) {
 	var n = req.body.name;
 	var pwd = req.body.password;
-	
+
 	var newUser = new User({
 		name: n,
 		password: pwd,
 		plan_id: 0,
 		friends:[]
 	});
-	
+
 	newUser.save();
-	
+
 	var user = util.format('A user has been created!/n');
 	res.json(user);
 }
@@ -293,6 +293,14 @@ function updateUser(req, res) {
 }
 
 function getPlanUsers(req, res) {
-
-
+	var id = req.swagger.params.plan_id.value;
+    Plan.findById(id, function(err, doc) {
+		var creater = doc.creater;
+		var members = doc.group_member;
+  	    members.push(creater);
+  	  	var user = {
+  		  "users": members
+  	  };
+  	  res.json(user);
+    });
 }
