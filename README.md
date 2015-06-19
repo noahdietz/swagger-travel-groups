@@ -7,8 +7,6 @@ Travel Groups is a group travel planning application that allows its users to cr
 invite their friends to travel with them and determine the optimal mode of transportation for their
 trip. 
 
-This is strictly an API defined in Swagger. The controllers are implemented to return mock data or input depending on the operation called.
-
 ## swagger-ui
 In order to view the Travel Groups API, start the project by running the following command in the travel-groups directory:
 	
