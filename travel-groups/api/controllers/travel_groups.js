@@ -92,7 +92,7 @@ function updatePlanByID(req, res) {
 					{_id: pid},
 					{
 						$set: {
-							de  stination: dest
+							destination: dest
 						}
 					}, function(err, updated) {
 						//err checking

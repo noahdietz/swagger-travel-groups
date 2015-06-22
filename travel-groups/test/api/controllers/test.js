@@ -221,82 +221,118 @@ var should = require('chai').should,
   describe('plan', function(){
 
     //addPlan test
-    it('should create a new plan and update the creator', function(){
+    it('should create the first plan and update the creator', function(){
       request.post({header:{'content-type':'application/json'},
-      url:'http://localhost:10010/path'},
+      url:'http://localhost:10010/path',
       json:{
         creater:userIDs[0],
-        
-      })
-    });
-/*
-    //getPlanByID key-value testing
-    it('should return the plan of the specified user', function(done){
-      api.get('/user/127/plan')
-      .set('Accept', 'application/json')
-      .expect(200)
-      .end(function(err, res){
-        expect(res.body).to.have.property('id');
-        expect(res.body.id).to.equal(11111);
-        expect(res.body).to.have.property('creater');
-        expect(res.body.creater).to.equal(127);
-        expect(res.body).to.have.property('depature');
-        expect(res.body.depature).to.equal('3:00 pm');
-        expect(res.body).to.have.property('origin');
-        expect(res.body.origin).to.equal('San Jose');
-        expect(res.body).to.have.property('destination');
-        expect(res.body.destination).to.equal('San Francisco');
-        expect(res.body).to.have.property('group_member');
-        expect(res.body.group_member).to.have.length(0);
-        expect(res.body).to.have.property('transportations');
-        expect(res.body.transportations).to.have.length(0);
-        done();
+        depature:'9:00 am',
+        destination:'San Francisco',
+        origin:'San Jose'
+      }},
+      function(err, res, body){
+        expect(body).to.have.property('creater');
+        expect(body.creater).to.equal(userIDs[0]);
+        expect(body).to.have.property('depature');
+        expect(body.depature).to.equal('9:00 am');
+        expect(body).to.have.property('destination');
+        expect(body.destination).to.equal('San Francisco');
+        expect(body).to.have.property('origin');
+        expect(body.origin).to.equal('San Jose');
+        expect(body).to.have.property('group_member');
+        expect(body.group_member).to.have.length(0);
+        expect(body).to.have.property('transportations');
+        expect(body.transportations).to.have.length(0);
+        expect(body).to.have.property('id');
+        planIDs.push(body.id);
       });
+    });
+
+    it('should create the second plan and update the creator', function(){
+      request.post({header:{'content-type':'application/json'},
+      url:'http://localhost:10010/path',
+      json:{
+        creater:userIDs[1],
+        depature:'7:00 pm',
+        destination:'New York City',
+        origin:'Los Angeles'
+      }},
+      function(err, res, body){
+        expect(body).to.have.property('creater');
+        expect(body.creater).to.equal(userIDs[1]);
+        expect(body).to.have.property('depature');
+        expect(body.depature).to.equal('7:00 pm');
+        expect(body).to.have.property('destination');
+        expect(body.destination).to.equal('New York City');
+        expect(body).to.have.property('origin');
+        expect(body.origin).to.equal('Los Angeles');
+        expect(body).to.have.property('group_member');
+        expect(body.group_member).to.have.length(0);
+        expect(body).to.have.property('transportations');
+        expect(body.transportations).to.have.length(0);
+        expect(body).to.have.property('id');
+        planIDs.push(body.id);
+      });
+    });
+
+    //getPlanByID key-value testing
+    it('should get the plan of the first user', function(){
+      request('http://localhost:10010/user/'+userIDs[0]+'/plan',
+        function(err, res, body){
+          expect(body).to.have.property('id');
+          expect(body.id).to.equal(planIDs[0]);
+          expect(body).to.have.property('creater');
+          expect(body.creater).to.equal(userIDs[0]);
+          expect(body).to.have.property('depature');
+          expect(body.depature).to.equal('9:00 am');
+          expect(body).to.have.property('origin');
+          expect(body.origin).to.equal('San Jose');
+          expect(body).to.have.property('destination');
+          expect(body.destination).to.equal('San Francisco');
+          expect(body).to.have.property('group_member');
+          expect(body.group_member).to.have.length(0);
+          expect(body).to.have.property('transportations');
+          expect(body.transportations).to.have.length(0);
+        });
     });
 
     //updatePlanByID full update key value testing
-    it('plan should relfect full changes specified in request', function(done){
-      api.post('/user/123/plan')
-      .set('Accept', 'application/json')
-      .send({
-        creater:321,
-        depature:'2:23pm',
-        destination:'San Jose',
-        origin:'San Francisco',
-        group_member:1,
-        transportations:2
-      })
-      .expect(200)
-      .end(function(err, res){
-        expect(res.body).to.have.property('id');
-        expect(res.body.id).to.equal(12345);
-        expect(res.body).to.have.property('creater');
-        expect(res.body.creater).to.equal(321);
-        expect(res.body).to.have.property('depature');
-        expect(res.body.depature).to.equal('2:23pm');
-        expect(res.body).to.have.property('origin');
-        expect(res.body.origin).to.equal('San Francisco');
-        expect(res.body).to.have.property('destination');
-        expect(res.body.destination).to.equal('San Jose');
-        expect(res.body).to.have.property('group_member');
-        expect(res.body.group_member).to.have.length(2);
-        expect(res.body).to.have.property('transportations');
-        expect(res.body.transportations).to.have.length(2);
-        done();
+    it('should edit all available fields for second user plan', function(){
+      request.post({header:{'content-type':'application/json'},
+        url:'http://localhost:10010/user/'+userIDs[1]+'/plan',
+        json:{
+          depature:'11:00 am',
+          origin:'London',
+          destination:'Los Angeles',
+          group_member:userIDs[0]
+        }},
+        function(err, res, body){
+          expect(body).to.have.property('id');
+          expect(body.id).to.equal(planIDs[1]);
+          expect(body).to.have.property('creater');
+          expect(body.creater).to.equal(userIDs[1]);
+          expect(body).to.have.property('depature');
+          expect(body.depature).to.equal('11:00 am');
+          expect(body).to.have.property('origin');
+          expect(body.origin).to.equal('London');
+          expect(body).to.have.property('destination');
+          expect(body.destination).to.equal('Los Angeles');
+          expect(body).to.have.property('group_member');
+          expect(body.group_member).to.have.length(1);
+          expect(body).to.have.property('transportations');
+          expect(body.transportations).to.have.length(0);
+        });
       });
-    });
 
     //getPlanUsers response length testing
-    it('should return all users a part of specified plan', function(done){
-      api.get('/plan/127/users')
-      .set('Accept', 'application/json')
-      .expect(200)
-      .end(function(err, res){
-        expect(res.body).to.have.property('users');
-        expect(res.body.users).to.have.length(3);
-        done();
-      });
+    it('should return all IDs of users a part of first plan', function(){
+      request('http://localhost:10010/plan/'+planIDs[0]+'/users',
+        function(err, res, body){
+          var json = JSON.parse(body);
+          expect(json).to.have.property('users');
+          expect(json.users).to.have.length(1);
+          expect(json.users[0]).to.equal(userIDs[1]);
+        });
     });
-    */
   });
   /*-------- End of plan path testing --------*/
