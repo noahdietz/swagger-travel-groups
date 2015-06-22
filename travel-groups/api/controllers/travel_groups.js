@@ -72,8 +72,8 @@ function updatePlanByID(req, res) {
 	var username;
 	var pid;
 	User.findById(uid, function(err, doc) {
-		username = doc.name;
-		Plan.findOne({'creater': username}, function(err, doc) {
+		userid = uid;
+		Plan.findOne({'creater': userid}, function(err, doc) {
 			pid = doc._id;
 			if (dep !== undefined) {
 				Plan.update(
