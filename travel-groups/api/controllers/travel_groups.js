@@ -269,7 +269,7 @@ function createUser(req, res) {
 	});
 
 	newUser.save();
-	var id = newUser.id;
+	var id = newUser._id;
 	var name = newUser.name;
 	var password = newUser.password;
 	var plan_id = newUser.plan_id;
@@ -328,7 +328,7 @@ function updateUser(req, res) {
 				}
 			);
 		}
-  	  var id = doc.id;
+  	  var id = doc._id;
   	  var name = doc.name;
   	  var password = doc.password;
   	  var plan_id = doc.plan_id;
