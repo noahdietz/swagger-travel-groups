@@ -104,8 +104,7 @@ var should = require('chai').should,
         url:'http://localhost:10010/user/558c29d06536c4e7d974a1de', 
         json:{
           name:'Mohsen Azimi',
-          password:'qrs789',
-          friends:userIDs[1]
+          password:'qrs789'
         }},
       function(err, res, body){
         expect(body).to.have.property('name');
@@ -116,7 +115,7 @@ var should = require('chai').should,
         expect(body).to.have.property('id');
         expect(body.id).to.equal('558c29d06536c4e7d974a1de');
         expect(body).to.have.property('friends');
-        expect(body.friends).to.have.length(1);
+        expect(body.friends).to.have.length(11);
         done();
       });
     });
@@ -293,8 +292,7 @@ var should = require('chai').should,
         json:{
           depature:'11:00 am',
           origin:'London',
-          destination:'Los Angeles',
-          group_member:userIDs[0]
+          destination:'Los Angeles'
         }},
         function(err, res, body){
           expect(body).to.have.property('id');
