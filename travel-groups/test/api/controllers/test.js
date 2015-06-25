@@ -101,7 +101,7 @@ var should = require('chai').should,
     //updateUser full update key value testing
     it('should update first user fully in one request', function(done){
       request.post({header:{'content-type':'application/json'}, 
-        url:'http://localhost:10010/user/'+userIDs[0], 
+        url:'http://localhost:10010/user/558c29d06536c4e7d974a1de', 
         json:{
           name:'Mohsen Azimi',
           password:'qrs789',
@@ -114,7 +114,7 @@ var should = require('chai').should,
         expect(body.password).to.equal('qrs789');
         expect(body).to.have.property('plan_id');
         expect(body).to.have.property('id');
-        expect(body.id).to.equal(userIDs[0]);
+        expect(body.id).to.equal('558c29d06536c4e7d974a1de');
         expect(body).to.have.property('friends');
         expect(body.friends).to.have.length(1);
         done();
