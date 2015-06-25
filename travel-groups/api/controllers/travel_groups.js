@@ -69,7 +69,7 @@ function updatePlanByID(req, res) {
 	var orig = req.body.origin;
 	var gm = req.body.group_member;
 	var tp = req.body.transportations
-	var username;
+	var userid;
 	var pid;
 	User.findById(uid, function(err, doc) {
 		userid = uid;
