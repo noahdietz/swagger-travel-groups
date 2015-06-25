@@ -270,58 +270,59 @@ var should = require('chai').should,
     it('should get the plan of the first user', function(done){
       request.get('http://localhost:10010/user/'+userIDs[0]+'/plan',
         function(err, res, body){
-          expect(body).to.have.property('id');
-          expect(body).to.have.property('creater');
-          expect(body.creater).to.equal(userIDs[0]);
-          expect(body).to.have.property('depature');
-          expect(body.depature).to.equal('9:00 am');
-          expect(body).to.have.property('origin');
-          expect(body.origin).to.equal('San Jose');
-          expect(body).to.have.property('destination');
-          expect(body.destination).to.equal('San Francisco');
-          expect(body).to.have.property('group_member');
-          expect(body.group_member).to.have.length(0);
+          var json = JSON.parse(body);
+          expect(json).to.have.property('id');
+          expect(json).to.have.property('creater');
+          expect(json.creater).to.equal(userIDs[0]);
+          expect(json).to.have.property('depature');
+          expect(json.depature).to.equal('9:00 am');
+          expect(json).to.have.property('origin');
+          expect(json.origin).to.equal('San Jose');
+          expect(json).to.have.property('destination');
+          expect(json.destination).to.equal('San Francisco');
+          expect(json).to.have.property('group_member');
+          expect(json.group_member).to.have.length(0);
           done();
         });
     });
 
-  //   //updatePlanByID full update key value testing
-  //   it('should edit all available fields for second user plan', function(done){
-  //     request.post({header:{'content-type':'application/json'},
-  //       url:'http://localhost:10010/user/'+userIDs[1]+'/plan',
-  //       json:{
-  //         depature:'11:00 am',
-  //         origin:'London',
-  //         destination:'Los Angeles',
-  //         group_member:userIDs[0]
-  //       }},
-  //       function(err, res, body){
-  //         expect(body).to.have.property('id');
-  //         expect(body.id).to.equal(planIDs[1]);
-  //         expect(body).to.have.property('creater');
-  //         expect(body.creater).to.equal(userIDs[1]);
-  //         expect(body).to.have.property('depature');
-  //         expect(body.depature).to.equal('11:00 am');
-  //         expect(body).to.have.property('origin');
-  //         expect(body.origin).to.equal('London');
-  //         expect(body).to.have.property('destination');
-  //         expect(body.destination).to.equal('Los Angeles');
-  //         expect(body).to.have.property('group_member');
-  //         expect(body.group_member).to.have.length(1);          
-  //         done();
-  //       });
-  //     });
+    //updatePlanByID full update key value testing
+    it('should edit all available fields for second user plan', function(done){
+      request.post({header:{'content-type':'application/json'},
+        url:'http://localhost:10010/user/'+userIDs[1]+'/plan',
+        json:{
+          depature:'11:00 am',
+          origin:'London',
+          destination:'Los Angeles',
+          group_member:userIDs[0]
+        }},
+        function(err, res, body){
+          expect(body).to.have.property('id');
+          // expect(body.id).to.equal(planIDs[1]);
+          expect(body).to.have.property('creater');
+          expect(body.creater).to.equal(userIDs[1]);
+          expect(body).to.have.property('depature');
+          expect(body.depature).to.equal('11:00 am');
+          expect(body).to.have.property('origin');
+          expect(body.origin).to.equal('London');
+          expect(body).to.have.property('destination');
+          expect(body.destination).to.equal('Los Angeles');
+          expect(body).to.have.property('group_member');
+          expect(body.group_member).to.have.length(1);          
+          done();
+        });
+      });
 
-  //   //getPlanUsers response length testing
-  //   it('should return all IDs of users a part of first plan', function(done){
-  //     request('http://localhost:10010/plan/'+planIDs[0]+'/users',
-  //       function(err, res, body){
-  //         var json = JSON.parse(body);
-  //         expect(json).to.have.property('users');
-  //         expect(json.users).to.have.length(1);
-  //         expect(json.users[0]).to.equal(userIDs[1]);
-  //         done();
-  //       });
-  //   });
+    //getPlanUsers response length testing
+    it('should return all IDs of users a part of first plan', function(done){
+      request('http://localhost:10010/plan/'+planIDs[0]+'/users',
+        function(err, res, body){
+          var json = JSON.parse(body);
+          expect(json).to.have.property('users');
+          expect(json.users).to.have.length(1);
+          expect(json.users[0]).to.equal(userIDs[0]);
+          done();
+        });
+    });
    });
   /*-------- End of plan path testing --------*/
