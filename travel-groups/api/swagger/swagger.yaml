@@ -101,7 +101,7 @@ paths:
           description: Error
           schema: 
             $ref: "#/definitions/ErrorResponse"
-    post: 
+    post:
       summary: update the plan
       description: update the plan the user creates
       operationId: updatePlanByID
@@ -111,28 +111,11 @@ paths:
           description: ID of the user
           required: true
           type: string
-        - name: depature
-          in: formData
-          description: Depature Time
-          required: false
-          type: string
-        - name: destination
-          in: formData
-          description: Destination of the plan
-          required: false
-          type: string
-        - name: origin
-          in: formData
-          description: Origin of the plan
-          type: string
-        - name: group_member
-          in: formData
-          description: member to add
-          type: string
-        - name: transportations
-          in: formData
-          description: transportation to add
-          type: string 
+        - name: new_info
+          in: body
+          description: new plan information
+          schema:
+            $ref: '#/definitions/UpdatePlan'
       responses: 
         200: 
           description: ok
@@ -239,6 +222,19 @@ definitions:
       password:
         type: string
       friends:
+        type: string
+
+  UpdatePlan:
+    properties:
+      depature:
+        type: string
+      destination:
+        type: string
+      origin:
+        type: string
+      group_member:
+        type: string
+      transportations:
         type: string
         
   Plan: 
