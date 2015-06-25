@@ -226,7 +226,7 @@ function addPlan(req, res) {
 	var planID = newPlan._id;
 
 	User.update(
-		{name: who},
+		{_id: who},
 		{
 			$set: {
 				plan_id: planID
