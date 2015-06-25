@@ -68,73 +68,89 @@ function updatePlanByID(req, res) {
 	var dest = req.body.destination;
 	var orig = req.body.origin;
 	var gm = req.body.group_member;
-	var tp = req.body.transportations
+	var tp = req.body.transportations;
 	var userid;
 	var pid;
-	User.findById(uid, function(err, doc) {
+	User.findById(uid, function(err, d) {
 		userid = uid;
 		Plan.findOne({'creater': userid}, function(err, doc) {
 			pid = doc._id;
-			if (dep !== undefined) {
-				Plan.update(
-					{_id: pid},
-					{
-						$set: {
-							depature: dep
-						}
-					}, function(err, updated) {
-						//err checking
-					}
-				);
+			if (dep !== "" && dep !== undefined) {
+				doc.depature = dep;
 			}
-			if (dest !== undefined) {
-				Plan.update(
-					{_id: pid},
-					{
-						$set: {
-							destination: dest
-						}
-					}, function(err, updated) {
-						//err checking
-					}
-				);
+			if (dest !== "" && dest !== undefined) {
+				doc.destination = dest;
 			}
-			if (orig !== undefined) {
-				Plan.update(
-					{_id: pid},
-					{
-						$set: {
-							origin: orig
-						}
-					}, function(err, updated) {
-						//err checking
-					}
-				);
+			if (orig !== "" && orig !== undefined) {
+				doc.origin = orig;
 			}
-			if (gm !== undefined) {
-				Plan.update(
-					{_id: pid},
-					{
-						$addToSet: {
-							group_member: gm
-						}
-					}, function(err, updated) {
-						//err checking
-					}
-				);
+			if (gm !== "" && gm !== undefined) {
+				doc.group_member.push(gm);
 			}
-			if (tp !== undefined) {
-				Plan.update(
-					{_id: pid},
-					{
-						$addToSet: {
-							transportations: tp
-						}
-					}, function(err, updated) {
-						//err checking
-					}
-				);
+			if (tp !== "" && tp !== undefined) {
+				doc.transportations.push(tp);
 			}
+			doc.save();
+			//if (dep !== undefined) {
+			//	Plan.update(
+			//		{_id: pid},
+			//		{
+			//			$set: {
+			//				depature: dep
+			//			}
+			//		}, function(err, updated) {
+			//			//err checking
+			//		}
+			//	);
+			//}
+			//if (dest !== undefined) {
+			//	Plan.update(
+			//		{_id: pid},
+			//		{
+			//			$set: {
+			//				destination: dest
+			//			}
+			//		}, function(err, updated) {
+			//			//err checking
+			//		}
+			//	);
+			//}
+			//if (orig !== undefined) {
+			//	Plan.update(
+			//		{_id: pid},
+			//		{
+			//			$set: {
+			//				origin: orig
+			//			}
+			//		}, function(err, updated) {
+			//			//err checking
+			//		}
+			//	);
+			//}
+			//if (gm !== undefined) {
+			//	Plan.update(
+			//		{_id: pid},
+			//		{
+			//			$addToSet: {
+			//				group_member: gm
+			//			}
+			//		}, function(err, updated) {
+			//			//err checking
+			//		}
+			//	);
+			//}
+			//if (tp !== undefined) {
+			//	Plan.update(
+			//		{_id: pid},
+			//		{
+			//			$addToSet: {
+			//				transportations: tp
+			//			}
+			//		}, function(err, updated) {
+			//			//err checking
+			//		}
+			//	);
+			//}
 			var id = doc._id;
 			var creater = doc.creater;
 			var depature = doc.depature;
@@ -290,42 +306,12 @@ function updateUser(req, res) {
 	var pwd = req.body.password;
 	var f = req.body.friends;
 	User.findById(id, function(err, doc) {
-		if (n !== undefined) {
-			User.update(
-				{_id: id},
-				{
-					$set: {
-						name: n
-					}
-				}, function(err, updated) {
-					//err checking
-				}
-			);
-		}
-		if (pwd !== undefined) {
-			User.update(
-				{_id: id},
-				{
-					$set: {
-						password: pwd
-					}
-				}, function(err, updated) {
-					//err checking
-				}
-			);
-		}
-		if (f !== undefined) {
-			User.update(
-				{_id: id},
-				{
-					$addToSet: {
-						friends: f
-					}
-				}, function(err, updated) {
-					//err checking
-				}
-			);
-		}
+		if (n !== "" && n !== undefined) doc.name = n;
+		if (pwd !== "" && pwd !== undefined) doc.password = pwd;
+		if (f !== "" && f != undefined) doc.friends.push(f);
+		doc.save();
+
+
   	  var id = doc._id;
   	  var name = doc.name;
   	  var password = doc.password;
