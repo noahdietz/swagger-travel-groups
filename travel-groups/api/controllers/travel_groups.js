@@ -287,7 +287,7 @@ function createUser(req, res) {
 function updateUser(req, res) {
 	var id = req.swagger.params.id.value;
 	var n = req.body.name;
-	var pwd = req.body.name;
+	var pwd = req.body.password;
 	var f = req.body.friends;
 	User.findById(id, function(err, doc) {
 		if (n !== undefined) {
