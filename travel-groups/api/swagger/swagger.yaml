@@ -51,7 +51,7 @@ paths:
           in: path
           description: id of the plan
           required: true
-          type: number
+          type: string
       responses:
         200:
           description: OK
@@ -91,7 +91,7 @@ paths:
           in: path
           description: ID of the user
           required: true
-          type: number
+          type: string
       responses: 
         200: 
           description: ok
@@ -101,43 +101,21 @@ paths:
           description: Error
           schema: 
             $ref: "#/definitions/ErrorResponse"
-    post: 
+    post:
       summary: update the plan
       description: update the plan the user creates
       operationId: updatePlanByID
       parameters: 
         - name: id
           in: path
-          description: ID of the plan
-          required: true
-          type: number
-        - name: creater
-          in: formData
           description: ID of the user
           required: true
-          type: number
-        - name: depature
-          in: formData
-          description: Depature Time
-          required: false
           type: string
-        - name: destination
-          in: formData
-          description: Destination of the plan
-          required: false
-          type: string
-        - name: origin
-          in: formData
-          description: Origin of the plan
-          type: string
-        - name: group_member
-          in: formData
-          description: member to add
-          type: number
-        - name: transportations
-          in: formData
-          description: transportation to add
-          type: number 
+        - name: new_info
+          in: body
+          description: new plan information
+          schema:
+            $ref: '#/definitions/UpdatePlan'
       responses: 
         200: 
           description: ok
@@ -158,8 +136,7 @@ paths:
           in: path
           description: ID of user to fetch
           required: true
-          type: integer
-          format: int64
+          type: string
       responses:
         200:
           description: target user found
@@ -178,8 +155,7 @@ paths:
           in: path
           description: id of user to be updated
           required: true
-          type: integer
-          format: int64
+          type: string
         - name: new_info
           in: body
           description: new user information
@@ -201,7 +177,7 @@ definitions:
   Transportation:
     properties:
       id: 
-        type: number
+        type: string
       which_method:
         type: string
       arrival:
@@ -222,13 +198,13 @@ definitions:
       - id
     properties:
       id:
-        type: number
+        type: string
       plan_id:
-        type: number
+        type: string
       friends:
         type: array
         items:
-            type: number
+            type: string
   NewUser:
     required:
       - name
@@ -243,9 +219,22 @@ definitions:
     properties:
       name:
         type: string
-      plan_id:
-        type: number
       password:
+        type: string
+      friends:
+        type: string
+
+  UpdatePlan:
+    properties:
+      depature:
+        type: string
+      destination:
+        type: string
+      origin:
+        type: string
+      group_member:
+        type: string
+      transportations:
         type: string
         
   Plan: 
@@ -255,21 +244,21 @@ definitions:
         - id
     properties:
         id: 
-          type: number
+          type: string
         group_member:
           type: array
           items: 
-            type: number
+            type: string
         transportations: 
           type: array
           items: 
-            type: number
+            type: string
   NewPlan: 
     required:
       - creater
     properties:
       creater:
-        type: number
+        type: string
       origin:
         type: string
       destination:

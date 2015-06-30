@@ -8,23 +8,30 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
-    "chai": "^3.0.0",
+	"chai": "^3.0.0",
     "express": "^4.12.3",
     "js-yaml": "^3.3.1",
     "mocha": "^2.2.5",
     "serve-static": "^1.9.3",
     "swagger": "^0.6.0",
     "swagger-express-mw": "0.0.x",
-    "swagger-ui": "^2.1.0"
+    "swagger-ui": "^2.1.0",
+    "swagger-express-mw": "0.0.x",
+    "connect": "^3.3.5",
+    "dotenv": "^1.1.0",
+    "mongodb": "~1.4.19",
+    "swagger-tools": "^0.8.7",
+    "mongoose":"^4.0.5",
+    "mongodb-uri":"^0.9.7",
+    "request":"^2.58.0"
   },
   "devDependencies": {
     "should": "^5.2.0",
     "supertest": "^0.15.0"
   },
   "scripts": {
-    "test": "mocha --recursive",
-    "start": "swagger project start",
-
+    "test": "./run.sh",
+    "start": "swagger project start",    
     "pretest": "npm install",
     "prestart": "npm install"
   }

@@ -1,3 +1,5 @@
 travel-groups/.gitignore
 .DS_Store
 travel-groups/node_modules
+travel-groups/.env
+travel-groups/npm-debug.log
