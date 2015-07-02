@@ -18,12 +18,13 @@ indexHtml = indexHtml.replace(
 );
 
 module.exports = function docsRouter(app) {
+ app.set('strict routing', true);
   // --------------------------- SwaggerUI -------------------------------------
   app.get("/docs/swagger/", function(req, res){
     res.send(swaggerJson); //return swagger json
   });
   // serve the modified index.html for swagger ui
-  app.get(SWAGGER_UI_PATH, function(req, res) {
+  app.get(SWAGGER_UI_PATH + '/', function(req, res) {
     res.setHeader('content-type', 'text/html');
     res.send(indexHtml);
   });
