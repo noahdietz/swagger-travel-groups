@@ -1,26 +1,31 @@
 'use strict';
 var chai = require('chai');
 var expect = chai.expect;
-var supertest = require('supertest');
-var api = supertest('http://localhost:10010'); // supertest init;
+var request = require('request');
 
 describe('/plan/{plan_id}/users', function() {
   describe('get', function() {
     it('should respond with 200 OK', function(done) {
-      api.get('//plan/{plan_id}/users')
-      .set('Accept', 'application/json')
-      .set({
-      })
-      .expect(200)
-      .end(function(err, res) {
-        if (err) {
-          done(err);
+      request({
+        url: 'http://localhost:10010//plan/{plan_id}/users',
+        qs: {
+        },
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Custom-Header': {
+        }}},
+      function(error, response, body) {
+        if (error) {
+          done(error);
           return;
         }
-        expect(res).to.have.property('name');
+
+        expect(body).to.have.property('name');
         done();
       });
     });
+
   });
 
 });
