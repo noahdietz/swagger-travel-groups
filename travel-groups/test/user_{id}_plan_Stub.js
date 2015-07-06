@@ -7,7 +7,7 @@ describe('/user/{id}/plan', function() {
   describe('get', function() {
     it('should respond with 200 ok', function(done) {
       request({
-        url: 'http://localhost:10010//user/{id}/plan',
+        url: 'http://localhost:10010/user/558c29c05d2857d4d92f698d/plan',
         qs: {
         },
         method: 'GET',
@@ -20,15 +20,18 @@ describe('/user/{id}/plan', function() {
           done(error);
           return;
         }
-
-        expect(body).to.have.property('name');
+        var json = JSON.parse(body);
+        expect(json).to.have.property('creater');
+        expect(json).to.have.property('depature');
+        expect(json).to.have.property('destination');
+        expect(json).to.have.property('origin');
         done();
       });
     });
 
     it('should respond with default Error', function(done) {
       request({
-        url: 'http://localhost:10010//user/{id}/plan',
+        url: 'http://localhost:10010/user/558c29c05d2857d4d92f698d/plan',
         qs: {
         },
         method: 'GET',
@@ -42,7 +45,6 @@ describe('/user/{id}/plan', function() {
           return;
         }
 
-        expect(body).to.have.property('name');
         done();
       });
     });
@@ -52,7 +54,7 @@ describe('/user/{id}/plan', function() {
   describe('post', function() {
     it('should respond with 200 ok', function(done) {
       request({
-        url: 'http://localhost:10010//user/{id}/plan',
+        url: 'http://localhost:10010/user/558c29c05d2857d4d92f698d/plan',
         qs: {
         },
         method: 'POST',
@@ -61,7 +63,7 @@ describe('/user/{id}/plan', function() {
           'Custom-Header': {
         }},
         json: {
-          new_info: 'DATA GOES HERE'
+          depature: 'Philadelphia'
         }
       },
       function(error, res, body) {
@@ -70,14 +72,17 @@ describe('/user/{id}/plan', function() {
           return;
         }
 
-        expect(body).to.have.property('name');
+        expect(body).to.have.property('creater');
+        expect(body).to.have.property('depature');
+        expect(body).to.have.property('destination');
+        expect(body).to.have.property('origin');
         done();
       });
     });
 
     it('should respond with default Error', function(done) {
       request({
-        url: 'http://localhost:10010//user/{id}/plan',
+        url: 'http://localhost:10010/user/558c29c05d2857d4d92f698d/plan',
         qs: {
         },
         method: 'POST',
@@ -86,7 +91,6 @@ describe('/user/{id}/plan', function() {
           'Custom-Header': {
         }},
         json: {
-          new_info: 'DATA GOES HERE'
         }
       },
       function(error, res, body) {
@@ -95,7 +99,6 @@ describe('/user/{id}/plan', function() {
           return;
         }
 
-        expect(body).to.have.property('name');
         done();
       });
     });

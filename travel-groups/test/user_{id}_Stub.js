@@ -7,7 +7,7 @@ describe('/user/{id}', function() {
   describe('get', function() {
     it('should respond with 200 target user found', function(done) {
       request({
-        url: 'http://localhost:10010//user/{id}',
+        url: 'http://localhost:10010/user/558c2bb38bd52d86db854caa',
         qs: {
         },
         method: 'GET',
@@ -20,15 +20,16 @@ describe('/user/{id}', function() {
           done(error);
           return;
         }
-
-        expect(body).to.have.property('name');
+        var json = JSON.parse(body);
+        expect(json).to.have.property('name')
+        expect(json).to.have.property('password');
         done();
       });
     });
 
     it('should respond with default Error', function(done) {
       request({
-        url: 'http://localhost:10010//user/{id}',
+        url: 'http://localhost:10010/user/558c2bb38bd52d86db854caa',
         qs: {
         },
         method: 'GET',
@@ -42,7 +43,6 @@ describe('/user/{id}', function() {
           return;
         }
 
-        expect(body).to.have.property('name');
         done();
       });
     });
@@ -52,7 +52,7 @@ describe('/user/{id}', function() {
   describe('post', function() {
     it('should respond with 200 update successful', function(done) {
       request({
-        url: 'http://localhost:10010//user/{id}',
+        url: 'http://localhost:10010/user/558c2bb38bd52d86db854caa',
         qs: {
         },
         method: 'POST',
@@ -61,7 +61,8 @@ describe('/user/{id}', function() {
           'Custom-Header': {
         }},
         json: {
-          new_info: 'DATA GOES HERE'
+          name: 'Amy Green',
+          password: '12333333'
         }
       },
       function(error, res, body) {
@@ -77,7 +78,7 @@ describe('/user/{id}', function() {
 
     it('should respond with default Error', function(done) {
       request({
-        url: 'http://localhost:10010//user/{id}',
+        url: 'http://localhost:10010/user/558c2bb38bd52d86db854caa',
         qs: {
         },
         method: 'POST',
@@ -86,7 +87,7 @@ describe('/user/{id}', function() {
           'Custom-Header': {
         }},
         json: {
-          new_info: 'DATA GOES HERE'
+
         }
       },
       function(error, res, body) {
@@ -94,8 +95,6 @@ describe('/user/{id}', function() {
           done(error);
           return;
         }
-
-        expect(body).to.have.property('name');
         done();
       });
     });

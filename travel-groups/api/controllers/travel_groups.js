@@ -324,6 +324,7 @@ function updateUser(req, res) {
   		  "plan_id": plan_id,
   		  "friends": friends
   	  };
+
   	  res.json(user);
 		});
 
@@ -335,7 +336,7 @@ function getPlanUsers(req, res) {
 		var creater = doc.creater;
 		var members = doc.group_member;
   	  members.push(creater);
-  	  	var user = {
+		 var user = {
   		  "users": members
   	  };
   	  res.json(user);

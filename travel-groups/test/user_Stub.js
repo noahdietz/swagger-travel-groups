@@ -7,7 +7,7 @@ describe('/user', function() {
   describe('post', function() {
     it('should respond with 200 User information is OK', function(done) {
       request({
-        url: 'http://localhost:10010//user',
+        url: 'http://localhost:10010/user',
         qs: {
         },
         method: 'POST',
@@ -16,7 +16,8 @@ describe('/user', function() {
           'Custom-Header': {
         }},
         json: {
-          User: 'DATA GOES HERE'
+          name: 'Amy Green',
+          password: '12344444'
         }
       },
       function(error, res, body) {
@@ -24,15 +25,15 @@ describe('/user', function() {
           done(error);
           return;
         }
-
         expect(body).to.have.property('name');
+        expect(body).to.have.property('password');
         done();
       });
     });
 
     it('should respond with default Error', function(done) {
       request({
-        url: 'http://localhost:10010//user',
+        url: 'http://localhost:10010/user',
         qs: {
         },
         method: 'POST',
@@ -49,8 +50,6 @@ describe('/user', function() {
           done(error);
           return;
         }
-
-        expect(body).to.have.property('name');
         done();
       });
     });

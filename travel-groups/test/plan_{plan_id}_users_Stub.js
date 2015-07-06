@@ -7,7 +7,7 @@ describe('/plan/{plan_id}/users', function() {
   describe('get', function() {
     it('should respond with 200 OK', function(done) {
       request({
-        url: 'http://localhost:10010//plan/{plan_id}/users',
+        url: 'http://localhost:10010/plan/558c3260f0a4bbaee2afb8f5/users',
         qs: {
         },
         method: 'GET',
@@ -20,8 +20,8 @@ describe('/plan/{plan_id}/users', function() {
           done(error);
           return;
         }
-
-        expect(body).to.have.property('name');
+        var json = JSON.parse(body);
+        expect(json).to.have.property('users');
         done();
       });
     });
